@@ -1,6 +1,5 @@
 git status
 git add .
 git commit -m "cos tam "
-git push
-
+git push (jak nie pojdzie to git push origin --force)
 
