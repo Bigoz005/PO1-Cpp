@@ -1,19 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
-void alokacja (int **macierz, int wymiar) {
-  int k;
-  macierz=(int**)malloc(wymiar*sizeof(int*));
-               for (k=0; k<wymiar;k++) {
-               		macierz[k]=(int*)malloc(wymiar*sizeof(int));
-       }
+double** alokacja (int wymiar) {
+  int k=0;
+  double **macierz=NULL;
+  macierz=(double**)malloc(wymiar*sizeof(double*));
+  if(macierz==NULL){
+  free(macierz);
+  printf("blad przypisania pamieci");
+  return 0;}
+    for (k=0; k<wymiar;k++) {
+     		macierz[k]=(double*)malloc(wymiar*sizeof(double));
+      if(macierz[k]==NULL){
+        free(macierz[k]);
+        printf("blad przypisania pamieci");
+        return 0;
+      }
+  }
+return macierz;
 }
 
-int wyznacznik (int **tab, int size)
+int wyznacznik (double **tab, int size)
 {
-       int i, j, k, l;
-       int **min;
+       int i=0, j=0, k=0, l=0;
+       double **min=NULL;
        int znak=1, sum=0;
 
        if(size==1)
@@ -21,7 +31,13 @@ int wyznacznik (int **tab, int size)
                return tab[0][0];
        }
 
-	alokacja(min, size-1);
+       if(size==2)
+       {
+        sum = tab[0][0]*tab[1][1]-tab[0][1]*tab[1][0];
+        return sum;
+       }
+
+	min=alokacja(size-1);
 
 	  for(l=0; l<(size); l++)								//iteruje kazdy kolejny element macierzy, l-do liczenia przekatnej
 	  {
@@ -35,7 +51,7 @@ int wyznacznik (int **tab, int size)
 				         min[i][j]=tab[i+1][j+1];
 			    }
 		    }
-		    printf("suma=%d\n", sum);
+		    printf("\nsuma=%d\n", sum);
 		    sum+=znak*tab[0][l]*wyznacznik(min, (size-1));
 		    znak=-znak;
 	  }
@@ -50,22 +66,30 @@ int wyznacznik (int **tab, int size)
 int main (void)
 {
     FILE *f;
-    int **macierz,wymiar, wynik, i, j, k;
+    double **macierz=NULL;
+    int wymiar=0, wynik=0, i=0, j=0;
     if( (f=fopen("plik.txt", "rt")) !=NULL){
-               fscanf(f, "%d", &wymiar);
-               alokacja(macierz, wymiar);
+              fscanf(f, "%d", &wymiar);
+              printf("rozmiar macierzy: %d", wymiar);
+              macierz = alokacja(wymiar);
+
                for(i=0; i<wymiar; i++) {
-                       for(j=0; j<wymiar; j++) {
-                      fscanf(f, "%d", &macierz[i][j]);
+                    for(j=0; j<wymiar; j++) {
+                    fscanf(f, "%lf", &macierz[i][j]);
                        }
                }
+       }
+       else
+       {
+         printf("nie mozna otworzyc pliku");
+         return 0;
        }
        fclose(f);
        wynik=wyznacznik(macierz, wymiar);
        printf("Wyznacznik: %d\n", wynik);
 
-    	for(k=0;k<wymiar;k++){
-    		free(macierz[k]);
+    	for(i=0;i<wymiar;i++){
+    		free(macierz[i]);
     	}
        free(macierz);
        return 0;
