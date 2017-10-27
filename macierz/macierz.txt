@@ -1,2 +1,0 @@
-Funkcja licząca wyznacznik macierzy
-Napisz w języku C funkcję obliczającą wyznacznik macierzy o dowolnym rozmiarze. Macierz powinna być wczytywana z pliku tekstowego o strukturze przedstawionej symbolicznie w pliku matrix.dat. Propozycja struktury wymaganej funkcji przedstawiona jest w pliku det_part.c. 
