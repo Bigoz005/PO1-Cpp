@@ -1,3 +1,5 @@
+/* Program liczacy wyznacznik macierzy dowolnego wymiaru z kontrola bledow alokcji pamieci */
+
 #include <stdio.h>
 #include <stdlib.h>
 
