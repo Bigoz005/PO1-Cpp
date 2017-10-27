@@ -1,6 +1,26 @@
-
 #include <stdio.h>
 #include <stdlib.h>
+
+/* double alokacja (double ***matrix, int wymiar){
+
+  int k=0;
+  matrix=(double**)malloc(sizeof(double*)*(wymiar));
+
+  if(matrix==NULL){
+    free(matrix);
+    printf("blad alokacji");
+    return 0;
+  }
+
+  for (k=0; k<wymiar; k++){
+    matrix[k]=(double*)malloc(sizeof(double)*(wymiar));
+      if(matrix[k]==NULL){
+        free(macierz[k]);
+        printf("blad alokacji");
+        return 0;
+      }
+  }
+} */
 
 double** alokacja (int wymiar){
 
