@@ -1,1 +1,0 @@
-g++ -o Test2 stack.h teststack.cpp stack.cpp
