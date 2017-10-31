@@ -1,4 +1,4 @@
-#include <stdlib.h>
+include <stdlib.h>
 #define STACKSIZE 20
 class stack
 {

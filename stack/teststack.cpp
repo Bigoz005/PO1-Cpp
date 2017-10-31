@@ -3,6 +3,10 @@
 
 int main()
 {
+	int dane;
+	printf("podaj rozmiar :");
+	scanf("%d", &d);
+	*dane = (int*) malloc (sizeof(int)*n);
 	stack s1;
 	stack s2;
 	s1.push(1);
