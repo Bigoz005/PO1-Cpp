@@ -5,7 +5,7 @@ using namespace std;
 int main() {
 	Complex a(4);
 	Complex b(5,7);
-	cout << "Modul liczby zespolonej b = " << b.modul() << endl;
+	cout << "Modul liczby zespolonej b = " << b.abs() << endl;
 	a=b;
 	a+b;
 	Complex c(2,2);

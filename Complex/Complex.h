@@ -9,11 +9,8 @@
 	private:
 		double Re;
 		double Im;
+		
 	public:
-		Complex() {
-			Re = 0;
-			Im = 0;
-		}
 		Complex(double newRe) {
 			Re = newRe;
 			Im = 0;
@@ -30,7 +27,13 @@
 			this->Re = co.Re;
 			this->Im = co.Im;
 			cout << "Przypisano do obiektu wartosci. a.Re=" << this->Re << " a.Im=" << this->Im << endl;
+		}		
+
+		Complex() {
+			Re = 0;
+			Im = 0;
 		}
+
 		Complex operator+(const Complex& co) const {
 			Complex x;
 			x.Re = this->Re+co.Re;
@@ -51,10 +54,54 @@
 			cout << "Nowe wartosci: x.Re=" << x.Re << " x.Im=" << x.Im << endl;
 			return x;
 		}
-		double modul() {
+		Complex operator/(const Complex& co) const {
+			Complex x;
+    			double w;
+     			w = co.Re * co.Re + co.Im * co.Im;
+				if(w>0){
+        				x.Re = (this->Re * co.Re + this->Im * co.Im)/w;
+        				x.Im = (co.Re * this->Im - this->Re * co.Im)/w;
+					cout << "Nowe wartosci: x.Re = " << x.Re << " x.Im = " << x.Im << endl;
+		 		return x;
+      				}
+     				else{
+        				cout << "Blad podczas dzielenia!" << endl;
+        			return 0;
+      				}
+		}
+
+		Complex operator/=(const Complex& co) {
+			Complex x;
+      			double w;
+      			w = co.Re * co.Re + co.Im * co.Im;
+				if(w>0){
+        				x.Re = (this->Re * co.Re + this->Im * co.Im)/w;
+				        x.Im = (co.Re * this->Im - this->Re * co.Im)/w;
+      				}
+			        else{
+				        cout << "Blad podczas dzielenia!" << endl;
+			        return 0;
+      				}
+	 		this->Re = x.Re;
+			this->Im = x.Im;
+			cout << "Przypisano do obiektu wartosci. x.Re = " << this->Re << " x.Im = " << this->Im << endl;
+			cout << "Nowe wartosci: x.Re = " << x.Re << " x.Im = " << x.Im << endl;
+		return x;
+		}
+		
+		double abs() {
 			return (sqrt(pow(this->Re, 2)+pow(this->Im, 2)));
 		}
+		Complex phase() {
+		//faza liczby zespolonej	
+		}
+	
+		Complex conj(){
+     	 		Complex Conj;
+     			Conj.Im = -1 * Im;
+	      		Conj.Re = Re;
+		return Conj;
+    		}
 	};
-
 
 #endif
