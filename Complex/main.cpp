@@ -10,5 +10,8 @@ int main() {
 	a+b;
 	Complex c(2,2);
 	a*c;
+	a/b;
+	a/=b;
+	cout << "Faza: " << b.phase();
 	return 0;
 }

@@ -9,30 +9,19 @@
 	private:
 		double Re;
 		double Im;
-		
-	public:
-		Complex(double newRe) {
-			Re = newRe;
-			Im = 0;
-			cout << "Stworzono nowy obiekt re=" << this->Re << " im=" << this->Im << endl;
-		}
 
-		Complex(double newRe, double newIm) {
+	public:
+		Complex(double newRe = 0, double newIm = 0) {
 			this->Re = newRe;
 			this->Im = newIm;
 			cout << "Stworzono nowy obiekt re=" << this->Re << " im=" << this->Im << endl;
 		}
-
 		Complex operator=(const Complex& co) {
 			this->Re = co.Re;
 			this->Im = co.Im;
 			cout << "Przypisano do obiektu wartosci. a.Re=" << this->Re << " a.Im=" << this->Im << endl;
-		}		
-
-		Complex() {
-			Re = 0;
-			Im = 0;
 		}
+
 
 		Complex operator+(const Complex& co) const {
 			Complex x;
@@ -88,14 +77,19 @@
 			cout << "Nowe wartosci: x.Re = " << x.Re << " x.Im = " << x.Im << endl;
 		return x;
 		}
-		
+
 		double abs() {
 			return (sqrt(pow(this->Re, 2)+pow(this->Im, 2)));
 		}
-		Complex phase() {
-		//faza liczby zespolonej	
+
+		double phase() {
+			double sinus,cosinus;
+			sinus = sin(this->Im/this->abs());
+			cosinus = cos(this->Re/this->abs());
+			return sinus+cosinus;
+		//faza liczby zespolonej
 		}
-	
+
 		Complex conj(){
      	 		Complex Conj;
      			Conj.Im = -1 * Im;
