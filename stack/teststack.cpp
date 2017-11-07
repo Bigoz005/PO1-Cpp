@@ -16,3 +16,4 @@ int main()
 	//free(s2.dane);
 	return 0;
 }
+
