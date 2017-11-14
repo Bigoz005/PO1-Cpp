@@ -4,6 +4,10 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <iostream>
+#include <cctype>
+#include <cstdio>
+#include <stdlib.h>
+
 using namespace std;
 
 class rcstring{
@@ -25,7 +29,7 @@ void check (unsigned int i) const;
 char read(unsigned int i) const;
 void write(unsigned int i, char c);
 int myatoi();
-rcstring& toLower();
+rcstring& tolower2();
 rcstring Left(int n);
 char operator[](unsigned int i) const;
 Cref operator[](unsigned int i);
@@ -177,44 +181,30 @@ inline void rcstring::write(unsigned int i, char c)
   data = data->detach();
   data->s[i] = c;
 }
-bool isNumericChar(char x)
-{
-    return (x >= '0' && x <= '9')? false: true;
-}
+
 int rcstring::myatoi(){
-    int res = 0;  // Initialize result
-    int sign = 1;  // Initialize sign as positive
-    int i = 0;  // Initialize index of first digit
-
-    // If number is negative, then update sign
-    if (data->s[0] == '-')
-    {
-        sign = -1;
-        i++;  // Also update index of first digit
-    }
-
-    // Iterate through all digits of input string and update result
-    for (; data->s[i] != '\0'; ++i)
-    {
-        if (isNumericChar(data->s[i]) == false)
-            return 0; // You may add some lines to write error message
-                      // to error stream
-        res = res*10 + data->s[i] - '0';
-    }
-
-    // Return result with sign
-    return 123;
+  return atoi(data->s);
 }
 
-rcstring & rcstring::toLower(){
-  if(islower(data->s)){
-    if(isupper()) return c+32;
-    else return c;
-  }
-}
+rcstring & rcstring::tolower2(){
+    unsigned int i=0;
+    char s=0;
+    while(i<data->size){
+        s = read(i);
+       if(!islower(s)) write (i, tolower (s));
+        i++;
+        }
+  return *this;
+    }
+
+
 rcstring rcstring::Left(int n){
-  
+    if(n <data->size){
+        data->assign(n, data->s);
+    }
+    return *this;
 }
+
 char rcstring::operator[](unsigned int i) const
 {
   cout << "char rcstring::operator[](unsigned int i) const"<<endl;
@@ -231,3 +221,4 @@ rcstring::Cref rcstring::operator[](unsigned int i)
 
 
 #endif /* __RCSTRING_H__ */
+

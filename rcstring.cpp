@@ -3,9 +3,8 @@
 int main()
 {
 rcstring a,b,c;
-int li;
 a="10";
-b="ala ma kota555";
+b="ALA ma kota";
 cout << a << " " << b << endl; // 10 ala ma ma kota
 c=a+b;
 cout << c<<endl; // 10ala ma kota
@@ -22,7 +21,9 @@ d[3]='b';
 cout << d << endl; //aulb15
 d[2]=d[1]=d[0];
 cout << d << endl; //aaab15
-li = b.myatoi();
-cout<<"dupa "<< li << endl;
+cout<<"atoi: "<< a.myatoi()<< endl;
+cout<<"lower: "<<b.tolower2()<<endl;
+a=b.Left(5);
+cout<<"left: "<<a<<endl;
 return 0;
 }
