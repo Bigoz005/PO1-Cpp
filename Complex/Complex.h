@@ -21,8 +21,6 @@
 			this->Im = co.Im;
 			cout << "Przypisano do obiektu wartosci. a.Re=" << this->Re << " a.Im=" << this->Im << endl;
 		}
-
-
 		Complex operator+(const Complex& co) const {
 			Complex x;
 			x.Re = this->Re+co.Re;
@@ -30,11 +28,22 @@
 			cout << "Nowe wartosci: Re=" << x.Re << " Im=" << x.Im << endl;
 			return x;
 		}
-		Complex operator-(const Complex& co) const {
-			Complex x;
-			x.Re = this->Re - co.Re;
-			x.Im = this->Im - co.Im;
-			return x;
+		Complex operator- () const
+		{
+		    return Complex(-Re,-Im);
+		}
+		Complex & operator+= (Complex co)
+		{
+		    Re += co.Re;
+		    Im += co.Im;
+		    return *this;
+		}
+
+		Complex & operator-= (Complex co)
+		{
+		    Re -= co.Re;
+		    Im -= co.Im;
+		    return *this;
 		}
 		Complex operator* (const Complex& co) const {
 			Complex x;
@@ -58,7 +67,6 @@
         			return 0;
       				}
 		}
-
 		Complex operator/=(const Complex& co) {
 			Complex x;
       			double w;
@@ -77,25 +85,52 @@
 			cout << "Nowe wartosci: x.Re = " << x.Re << " x.Im = " << x.Im << endl;
 		return x;
 		}
+		
 
-		double abs() {
+		double abs() const
+		{
 			return (sqrt(pow(this->Re, 2)+pow(this->Im, 2)));
 		}
 
-		double phase() {
-			double sinus,cosinus;
-			sinus = sin(this->Im/this->abs());
-			cosinus = cos(this->Re/this->abs());
-			return sinus+cosinus;
-		//faza liczby zespolonej
+		double phase() const
+		{
+			if (Re > 0){
+				return atan(Im / Re)*180/3.1415;}
+			else
+			{
+				if(Re<0){
+					return ((atan(Im / Re))*180/3.1415+180);}
+				else
+				{
+					if (Im >0){
+						return 90;}
+					else{
+						return 270;}
+				} 
+			}
+						
 		}
 
-		Complex conj(){
+		/*Complex conj(){
      	 		Complex Conj;
      			Conj.Im = -1 * Im;
 	      		Conj.Re = Re;
 		return Conj;
-    		}
-	};
+    		}*/
 
+		double conj() const 
+		{
+		this->Im=-Im;
+		}
+		
+	
+		friend Complex operator- (Complex, Complex);
+		
+	};
+	inline Complex 
+		operator - (Complex s1, Complex s2)
+		{
+		  Complex n (s1);
+		  return n -= s2;
+	};
 #endif
