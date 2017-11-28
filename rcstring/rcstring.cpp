@@ -29,8 +29,16 @@ cout<<"lower: "<<b.tolower2()<<endl;
 cout<<"lower: "<<e.tolower2()<<endl;
 rcstring x=b;
 cout<<"b przed left: "<<x<<endl;
+try
+{
 a=b.Left(9);
 cout<<"left: "<<a<<endl;
-cout<<b<<"\n"<<x;
+}
+catch(...)
+{
+cout<<"error";
+}
+
+cout<<b<<"\n"<<x<<"\n";
 return 0;
 }

@@ -93,7 +93,6 @@ cout<<"Bad Allocation";
       //delete [] s;
 
       s = ns;
-
     }
     catch(bad_alloc)
     {
@@ -196,7 +195,6 @@ rcstring& rcstring::operator=(const char* s)
     throw BadAlloc();
     cout<<"Bad Allocation";
   }
-  delete data;
 }
 
 ostream& operator << (ostream& o, const rcstring& s)
@@ -220,7 +218,6 @@ catch(bad_alloc)
   throw BadAlloc();
   //cout<<"Bad Allocation";
 }
-delete data;
 }
 
 rcstring rcstring::operator+(const rcstring & s) const
@@ -292,17 +289,25 @@ rcstring & rcstring::tolower2(){
     }
     strncpy(newChar, data->s, n);
     newChar[n] = '\0';
+
+    try
+    {
     rcstring x(newChar);
     delete [] newChar;
     return x;
+    }
+    catch(...)
+    {
+        cout << "BadAlloc";
+        delete [] newChar;
+        throw;
+    }
 }
 
   /*    rcstring leftstring=data->s;
       strncpy((leftstring.data->s), (data->s), n);
       strcpy( (leftstring.data->s+n), '\0'); //blad z konewrsja
       return leftstring;
-
-
 }*/
 
 
