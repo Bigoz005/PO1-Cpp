@@ -8,7 +8,7 @@ int main()
 	try
 	{
 		cout << endl;
-
+		/*
 		CMatrix A1(2,4,1.0);
 		//0 					matrix A1 2X5
 		//1	 [	1.0  0.0  0.0  0.0
@@ -22,6 +22,20 @@ int main()
 		//3			6  6  0
 		//4			6  6  6  ]
 		cout <<"A2: \n"<< A2 << endl << endl;
+		*/
+
+		CMatrix A1(2,5,1.0);
+		//Create matrix A1 = [	1.0  0.0  0.0  0.0  0.0
+		//			0.0  1.0  0.0  0.0  0.0  ]
+		cout << "A1: \n"<< A1 << endl<< endl;
+
+		CMatrix A2(5,3,0.0,6.3);
+		//Create matrix A1 = [	0.0  6.3  6.3
+		//			6.3  0.0  6.3
+		//			6.3  6.3  0.0
+		//			6.3  6.3  6.3
+		//			6.3  6.3  6.3  ]
+		cout <<"A2: \n"<< A2 << endl<< endl;
 
 		CMatrix S = A1 * A2;
 		cout <<"Matrix S:"<<endl<< S << endl << endl;
