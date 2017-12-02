@@ -217,19 +217,19 @@ CMatrix & CMatrix::operator=(double** co){
 
 ostream & operator << (ostream & s, const CMatrix & matrix){
 	//cout << \"matrix.cols=\" << matrix.block->cols <<endl;
-	s << "\"[\"";
+	s << "[";
 	for(unsigned int i=0;i<matrix.block->rows;i++)
 	for(unsigned int j=0;j<matrix.block->cols;j++){
 
 		s << matrix.block->data[i][j];
 
 		if(((j+1) % matrix.block->cols) == 0 && j!=0 && i!=matrix.block->rows-1)
-		s << "\"\\n \""; // Tu trzeba cos wykombibnowac xd
+		s << endl ; // Tu trzeba cos wykombibnowac xd
 
 		if(!(i==matrix.block->rows-1 && j==matrix.block->cols-1) && j!=matrix.block->cols-1)
 		s << "\", \"";
 	}
-	s << "\"]\"";
+	s << "]";
 	return s;
 }
 
@@ -280,24 +280,24 @@ class CMatrix::Cref
 	unsigned int i;
 
 	Cref (CMatrix& ss, unsigned int ii): s(ss), i(ii){
-		cout << "\"cref contructor CALLED\\n\""<<endl;
+		cout << "\"cref contructor CALLED\""<<endl;
 	};
 
 public:
 
 	operator double*() const{
-		cout << "\"operator double* CALLED\\n\""<<endl;
+		cout << "\"operator double* CALLED\""<<endl;
 		return s.read(i);
 	};
 
 	CMatrix::Cref& operator = (double* c){
-		cout << "\"operator = (double* c) CALLED\\n\"" << endl;
+		cout << "\"operator = (double* c) CALLED\"" << endl;
 		s.write(i,c);
 		return *this;
 	};
 
 	CMatrix::Cref& operator = (const Cref& ref){
-		cout << "\"operator = (const Cref& ref) CALLED\\n \"" << endl;
+		cout << "\"operator = (const Cref& ref) CALLED\"" << endl;
 		return operator = ((double*)ref);
 	};
 
@@ -313,7 +313,7 @@ CMatrix::Cref CMatrix::operator[](unsigned int i)
 }
 
 ostream& operator<<(ostream& o, const CMatrix::Cref& s1){
-	cout << "\"operator<<(ostream& o, const CMatrix::Cref& s1)\\n\""<<endl;
+	cout << "\"operator<<(ostream& o, const CMatrix::Cref& s1)\""<<endl;
 	o << s1.s.block->data[s1.i][s1.i];
 	return o;
 }
