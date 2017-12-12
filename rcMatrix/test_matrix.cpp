@@ -50,6 +50,8 @@ int main()
 		S[0][0] = 1.4;					//Modify S
 		cout << "S[0][0]=" << S[0][0] <<endl;		//Verify S
 		cout << "B[0][0]=" << B[0][0] <<endl;		//Verify B
+		cout <<"Matrix S:"<<endl<< S << endl << endl;
+		cout <<"Matrix B:"<<endl<< B << endl << endl;
 	}
 	catch(IndexOutOfRange&)
 	{
@@ -63,4 +65,5 @@ int main()
 	{
 		cout << "Out of Memory" << endl;
 	}
+
 };
