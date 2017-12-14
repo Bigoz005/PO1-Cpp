@@ -1,7 +1,7 @@
 # include "employee.h" //defines class Employee
 # include "map_template2.h" //defines template map_template<Key,Value>
 # include <iostream>
-# include <conio.h>
+
 using namespace std;
 
 int main()
@@ -33,7 +33,7 @@ int main()
 		cout << "blad!!!" << endl;
 	}
 	
-	system("pause");
+
     	
     return 0;
 }
