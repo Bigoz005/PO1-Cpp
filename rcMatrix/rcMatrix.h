@@ -24,8 +24,7 @@ public:
 	CMatrix(unsigned int, unsigned int, double, double);
 	void write(unsigned int, unsigned int, double);
 	double read(unsigned int, unsigned int ) const;
-	// double* operator[](unsigned int i )const;
-	CMatrix& operator=(const CMatrix& asOp);
+	CMatrix& operator=(const CMatrix& pew);
 	CMatrix& operator = (const double &num);
 	~CMatrix();
 	friend ostream & operator << (ostream & s, const CMatrix & matrix);
@@ -34,7 +33,6 @@ public:
 	Cref operator[](unsigned int i);
 
 };
-
 
 struct CMatrix::rcmatrix
 {
@@ -58,7 +56,9 @@ struct CMatrix::rcmatrix
 		{
 			this->data = new double*[this->rows];
 			for(unsigned int i=0;i<this->rows;i++)
-			this->data[i]=new double[this->cols];
+			{
+				this->data[i]=new double[this->cols];
+			}
 		}
 		catch(...)
 		{
@@ -66,10 +66,13 @@ struct CMatrix::rcmatrix
 		}
 
 		for(unsigned int i=0;i<this->rows;i++)
-		for(unsigned int j=0;j<this->cols;j++){
-			fs >> this->data[i][j];
+		{
+			for(unsigned int j=0;j<this->cols;j++)
+			{
+				fs >> this->data[i][j];
+			}
+			this->n=1;
 		}
-		this->n=1;
 	}
 
 	rcmatrix(unsigned int nrows, unsigned int ncols, double var){
@@ -77,17 +80,22 @@ struct CMatrix::rcmatrix
 		{
 			this->data = new double*[nrows];
 			for(unsigned int i=0;i<nrows;i++)
-			this->data[i]=new double[ncols];
+			{
+				this->data[i]=new double[ncols];
+			}
 		}
 		catch(...){
 			throw OutOfMem();
 		}
 
 		for(unsigned int i=0;i<nrows;i++)
-		for(unsigned int j=0;j<ncols;j++)
-		if(i==j)this->data[i][j]=var;
-		else this->data[i][j]=0.0;
-
+		{
+			for(unsigned int j=0;j<ncols;j++)
+			{
+				if(i==j)this->data[i][j]=var;
+				else this->data[i][j]=0.0;
+			}
+		}
 		this->rows=nrows;
 		this->cols=ncols;
 		this->n=1;
@@ -114,33 +122,35 @@ struct CMatrix::rcmatrix
 		this->n=1;
 	};
 
-	rcmatrix(unsigned int nrows, unsigned int ncols,double** lol){
+	rcmatrix(unsigned int nrows, unsigned int ncols,double** pie){
 		this->rows=nrows;
 		this->cols=ncols;
 		this->n=1;
-		this->data = lol;
+		this->data = pie;
+		cout<<endl<<"123445566"<<endl;
 	}
-	rcmatrix(const rcmatrix& lol){
+	rcmatrix(const rcmatrix& pie){
 
 		try
 		{
-			this->data = new double*[lol.rows];
-			for(unsigned int i=0;i<lol.rows;i++)
-			this->data[i]=new double[lol.cols];
+			this->data = new double*[pie.rows];
+			for(unsigned int i=0;i<pie.rows;i++)
+			this->data[i]=new double[pie.cols];
 		}
 		catch(...){
 			throw OutOfMem();
 		}
 
-		for(unsigned int i=0;i<lol.rows;i++)
-		for(unsigned int j=0;j<lol.cols;j++)
-		this->data[i][j]=lol.data[i][j];
-
-
-		this->rows=lol.rows;
-		this->cols=lol.cols;
-		this->n=1;
-
+		for(unsigned int i=0;i<pie.rows;i++)
+		{
+			for(unsigned int j=0;j<pie.cols;j++)
+			{
+				this->data[i][j]=pie.data[i][j];
+				this->rows=pie.rows;
+				this->cols=pie.cols;
+				this->n=1;
+			}
+		}
 	}
 
 	~rcmatrix(){
@@ -157,32 +167,30 @@ struct CMatrix::rcmatrix
 		return t;
 	}
 
-	// void assign(double** p){
-	// 	data = p;
-	// }
 	void assign(int r,int c, const double &num)
 	{
-	     r=rows;
-	     c=cols;
-	     double **temp_mat;
+		r=rows;
+		c=cols;
+		double **temp_mat;
 
 		temp_mat= new double *[r];
 
 		for(int i=0;i<r;i++)
 		{
-                  temp_mat[i]=new double[c];
-		   delete []data[i];
+			temp_mat[i]=new double[c];
+			delete []data[i];
 		}
 
 		delete []data;
 
-	      for(int j=0;j<r;j++)
-	      {
-		for(int k=0;k<c;k++)
-		  temp_mat[j][k]=num;
-	      }
-
-	      data=temp_mat;
+		for(int j=0;j<r;j++)
+		{
+			for(int k=0;k<c;k++)
+			{
+				temp_mat[j][k]=num;
+			}
+		}
+		data=temp_mat;
 	}
 };
 
@@ -212,71 +220,11 @@ CMatrix::CMatrix(unsigned int nrows, unsigned int ncols, double var1, double var
 	block = new rcmatrix(nrows,ncols,var1,var2);
 }
 
-CMatrix& CMatrix::operator = (const CMatrix& asOp){
-	asOp.block->n++;
-	if(--block->n == 0)
-		delete block;
-
-	block=asOp.block;
-	block=block->detach();
-	return *this;
-}
-
-CMatrix & CMatrix::operator=(const double &num)
-{
-	if(block->n==1)
-	  block->assign(block->rows,block->cols,num);
-
-        else
-	{
-	  rcmatrix *temp= new rcmatrix(block->rows,block->cols,num);
-	  block->n--;
-	  block=temp;
-	}
-	return *this;
-}
-
-ostream & operator << (ostream & s, const CMatrix & matrix){
-	s << "[";
-	for(unsigned int i=0;i<matrix.block->rows;i++)
-	for(unsigned int j=0;j<matrix.block->cols;j++){
-
-		s << matrix.block->data[i][j];
-
-		if(((j+1) % matrix.block->cols) == 0 && j!=0 && i!=matrix.block->rows-1)
-		s << endl ; // Tu trzeba cos wykombibnowac xd
-
-		if(!(i==matrix.block->rows-1 && j==matrix.block->cols-1) && j!=matrix.block->cols-1)
-		s << "\", \"";
-	}
-	s << "]";
-	return s;
-}
-
-inline CMatrix operator * (const CMatrix& m1, const CMatrix& m2)
-{
-
-	if(m1.block->cols != m2.block->rows)throw WrongDim();
-
-	CMatrix newMatrix(m1.block->rows, m2.block->cols,0.0);
-
-	for(unsigned int i=0;i<newMatrix.block->rows;i++)
-	for(unsigned int j=0;j<newMatrix.block->cols;j++)
-	{
-		double var=0.0;
-
-		for(unsigned int lol=0;lol<m1.block->cols;lol++)
-		var += m1.block->data[i][lol]*m2.block->data[lol][j];
-
-		newMatrix.block->data[i][j] = var;
-	}
-
-	return newMatrix;
-}
-
 double CMatrix::read(unsigned int i, unsigned int j) const{
-	try{
-		return block->data[i][j];
+	try
+	{
+		if(i>5)
+		block->data[i][j];
 	}
 	catch(...){
 		throw IndexOutOfRange();
@@ -285,7 +233,8 @@ double CMatrix::read(unsigned int i, unsigned int j) const{
 
 void CMatrix::write(unsigned int i, unsigned int j, double c){
 	block = block->detach();
-	try{
+	try
+	{
 		block->data[i][j] = c;
 	}
 	catch(...){
@@ -319,15 +268,77 @@ class CMatrix::Cref
 
 	Cref (CMatrix& ss, unsigned int ii): s(ss), i(ii){
 	};
-	public:
-		Cref_2 operator[](unsigned int j){
-			return Cref_2(s,i,j);
-		}
+public:
+	Cref_2 operator[](unsigned int j){
+		return Cref_2(s,i,j);
+	}
 };
 
 CMatrix::Cref CMatrix::operator[](unsigned int i)
 {
 	return Cref(*this,i);
+}
+
+CMatrix& CMatrix::operator = (const CMatrix& pew){
+	pew.block->n++;
+	if(--block->n == 0)
+	delete block;
+
+	block=pew.block;
+	block=block->detach();
+	return *this;
+}
+
+CMatrix & CMatrix::operator=(const double &num)
+{
+	if(block->n==1)
+	block->assign(block->rows,block->cols,num);
+
+	else
+	{
+		rcmatrix *temp= new rcmatrix(block->rows,block->cols,num);
+		block->n--;
+		block=temp;
+	}
+	return *this;
+}
+
+ostream & operator << (ostream & s, const CMatrix & matrix){
+	s << "[";
+	for(unsigned int i=0;i<matrix.block->rows;i++)
+	for(unsigned int j=0;j<matrix.block->cols;j++){
+
+		s << matrix.block->data[i][j];
+
+		if(((j+1) % matrix.block->cols) == 0 && j!=0 && i!=matrix.block->rows-1)
+		s << endl ;
+
+		if(!(i==matrix.block->rows-1 && j==matrix.block->cols-1) && j!=matrix.block->cols-1)
+		s << "\", \"";
+	}
+	s << "]";
+	return s;
+}
+
+inline CMatrix operator * (const CMatrix& m1, const CMatrix& m2)
+{
+
+	if(m1.block->cols != m2.block->rows)throw WrongDim();
+
+	CMatrix newMatrix(m1.block->rows, m2.block->cols,0.0);
+
+	for(unsigned int i=0;i<newMatrix.block->rows;i++)
+	for(unsigned int j=0;j<newMatrix.block->cols;j++)
+	{
+		double var=0.0;
+
+		for(unsigned int pie=0;pie<m1.block->cols;pie++)
+		var += m1.block->data[i][pie]*m2.block->data[pie][j];
+
+		newMatrix.block->data[i][j] = var;
+	}
+
+	return newMatrix;
 }
 
 #endif

@@ -25,12 +25,14 @@ int main()
 		*/
 
 		CMatrix A1(2,5,1.0);
-		//Create matrix A1 = [	1.0  0.0  0.0  0.0  0.0
+		//Create matrix A1 =
+		//		[	1.0  0.0  0.0  0.0  0.0
 		//			0.0  1.0  0.0  0.0  0.0  ]
 		cout << "A1: \n"<< A1 << endl<< endl;
 
 		CMatrix A2(5,3,0.0,6.3);
-		//Create matrix A1 = [	0.0  6.3  6.3
+		//Create matrix A1 =
+		//		[	0.0  6.3  6.3
 		//			6.3  0.0  6.3
 		//			6.3  6.3  0.0
 		//			6.3  6.3  6.3
@@ -46,8 +48,8 @@ int main()
 		f1.close();
 		cout <<"File Matrix:\n"<< B << endl << endl;
 
-		S = B;						//Assign B to S
-		S[0][0] = 1.4;					//Modify S
+		S = B;																	//Assign B to S
+		S[0][0] = 1.4;													//Modify S
 		cout << "S[0][0]=" << S[0][0] <<endl;		//Verify S
 		cout << "B[0][0]=" << B[0][0] <<endl;		//Verify B
 		cout <<"Matrix S:"<<endl<< S << endl << endl;
@@ -61,7 +63,7 @@ int main()
 	{
 		cout << "Wrong Matrix Dimensions" << endl;
 	}
-	catch(bad_alloc)
+	catch(OutOfMem)
 	{
 		cout << "Out of Memory" << endl;
 	}
