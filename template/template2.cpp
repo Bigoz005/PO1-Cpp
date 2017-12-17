@@ -1,5 +1,5 @@
-# include "employee.h" //defines class Employee
-# include "map_template2.h" //defines template map_template<Key,Value>
+# include "employee.h"
+# include "map_template2.h"
 # include <iostream>
 
 using namespace std;
@@ -7,8 +7,8 @@ using namespace std;
 int main()
 {
 	try{
-	typedef unsigned int ID; //Identification number of Employee
-	map_template<ID,Employee> Database; //Database of employees
+	typedef unsigned int ID;
+	map_template<ID,Employee> Database;
 	Database.add(761028073,Employee("Jan Kowalski","salesman",28));
 	Database.add(510212881,Employee("Adam Nowak","storekeeper",54));
 	Database.add(730505129,Employee("Anna Zaradna","secretary",32));
@@ -24,17 +24,13 @@ int main()
 	
 	Database = NewDatabase;
 	cout << Database << endl;
-	
-	
-	
 	}
+	
 	catch(...)
 	{
-		cout << "blad!!!" << endl;
+		cout << "error" << endl;
 	}
 	
-
-    	
     return 0;
 }
 

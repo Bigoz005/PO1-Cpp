@@ -1,6 +1,6 @@
-# ifndef biblioteka_h
-# define biblioteka_h
-# include <string>
+#ifndef biblioteka_h
+#define biblioteka_h
+#include <string>
 #include <ostream>
 using namespace std;
 
@@ -19,10 +19,14 @@ public:
 		status=new_status;
 		lstron=new_lstron;
 	}
-	~Biblioteka() { };
+
+	~Biblioteka()
+	{
+	};
+
 	friend ostream& operator << (ostream& o, const Biblioteka& e)
 	{
            return o << e.autor << ' ' << e.kategoria << ' ' << e.status << ' ' << e.lstron;
 	}
 };
-# endif /* emplyee.h */ 
+#endif
