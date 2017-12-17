@@ -24,8 +24,8 @@ class map_template
 	
 		map_template (const map_template & z)
 		{
-			node * pa = 0; //aktualny
-			node * pn = 0; //nastepny
+			node * pa = 0; //aktualny węzeł
+			node * pn = 0; //nastepny węzeł
 			try{
 				if( z.head == 0 )
 				{
@@ -65,7 +65,7 @@ class map_template
 	
 		map_template& operator= (const map_template & l)
 		{
-			if (&l == this) 		// ????
+			if (&l == this) 		
 			{
 				return *this;
 			}

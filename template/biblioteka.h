@@ -12,7 +12,7 @@ public:
 	string status;
 	int lstron;
 
-	Biblioteka(string new_autor="Nie podano", string new_kategoria="Nie podano", string new_status="Nie podano", int new_lstron=0)
+	Biblioteka(string new_autor="Brak danych", string new_kategoria="Brak danych", string new_status="Brak danych", int new_lstron=0)
 	{
 		autor=new_autor;
 		kategoria=new_kategoria;
