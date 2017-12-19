@@ -19,18 +19,18 @@ class map_template
 	
 	public:
 		
-		map_template(): head(NULL) //konstruktor z lista inicjalizacyjna zeby nie pisac w ciele konstruktora ze head to null
+		map_template(): head(NULL) //konstruktor z lista inicjalizacyjna zeby nie pisac w ciele konstruktora ze head to null itd.
 		{
 		}
 	
-		map_template (const map_template & z)
+		map_template (const map_template & z)// konstruktor kopiujacy
 		{
-			node * pa = 0; //aktualny węzeł
-			node * pn = 0; //nastepny węzeł
+			node * pa = NULL; //aktualny węzeł
+			node * pn = NULL; //nastepny węzeł
 			try{
-				if( z.head == 0 )
+				if( z.head == NULL )
 				{
-					head = 0;
+					head = NULL;
 				}	
 				else
 				{
@@ -64,25 +64,9 @@ class map_template
 			};
 		}
 	
-		map_template& operator= (const map_template & l)
-		{
-			if (&l == this) 		
-			{
-				return *this;
-			}
-		
-			map_template t (l);
-		
-			node *k = head;
-			head = t.head;
-			t.head = k;
-			
-			return *this;
-		}
-	
 		~map_template() //destruktor listy
 		{
-			while(head)
+			while(head) //dopoki head!=NULL
 			{
 				node* tmp = head;
 				head = head -> next;
@@ -90,7 +74,8 @@ class map_template
 			}
 		}
 		
-		void add(key klucz_nowy, data dane_nowy)
+
+		void add(key klucz_nowy, data dane_nowy) 
 		{
 			node* wezel = new node;
 			try
@@ -110,7 +95,7 @@ class map_template
 		
 		data* find(key klucz_szukaj)
 		{
-			for(node* i=head; i!=NULL; i=i->next)
+			for(node* i=head; i; i=i->next)
 			{
 				if(klucz_szukaj==i->klucz)
 				{
@@ -120,6 +105,23 @@ class map_template
 		return 0;
 		}
 	
+		map_template& operator= (const map_template & l)
+		{
+			if (&l == this) 		
+			{
+				return *this; 
+			}
+		
+			map_template t (l); // konstruktor kopiujacy
+		
+			node *k = head;
+			head = t.head;
+			t.head = k;
+			
+			return *this;
+		}
+	
+		
 	friend std::ostream& operator << (std::ostream& o, const map_template& m)
 	{
 		for (node* i = m.head; i; i = i->next)
