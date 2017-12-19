@@ -11,16 +11,19 @@ int main()
 	map_template<ID,Biblioteka> Database;
 	Database.add("Bajki Brzechwy",Biblioteka("Jan Brzechwa","Bajki Brzechwy","Na stanie",58));
 	Database.add("Pan Tadeusz",Biblioteka("Adam Mickiewicz","Pan Tadeusz","Wypozyczone",765));
+	Database.add("Symfonia C++ Standard",Biblioteka("Jerzy Grębosz","Symfonia C++ Standard","Wypozyczone",1354));
 	cout << Database << endl;
 
 	map_template<ID,Biblioteka> NewDatabase = Database;
 
-	Biblioteka* pE;
-	pE = NewDatabase.find("Pan Tadeusz");
-	pE->lstron = 813;
-	pE = NewDatabase.find("Bajki Brzechwy");
-	pE->status = "Wypozyczone";
-
+	Biblioteka* pB;
+	pB = NewDatabase.find("Pan Tadeusz");
+	pB->lstron = 813;
+	pB = NewDatabase.find("Bajki Brzechwy");
+	pB->status = "Wypozyczone";
+	pB = NewDatabase.find("Symfonia C++ Standard");
+	pB->status = "Na stanie";
+	
 	Database = NewDatabase;
 	cout << Database << endl;
 	}

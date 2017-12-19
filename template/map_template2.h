@@ -1,3 +1,4 @@
+#include <iostream>
 template <typename key, typename data>
 
 class map_template
